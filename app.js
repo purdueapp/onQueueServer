@@ -12,10 +12,11 @@ let request = require('request'); // "Request" library
 let cors = require('cors');
 let querystring = require('querystring');
 let cookieParser = require('cookie-parser');
+require('dotenv').config();
 
-let client_id = 'CLIENT_ID'; // Your client id
-let client_secret = 'CLIENT_SECRET'; // Your secret
-let redirect_uri = '"http://data.cs.purdue.edu:7374/callback"'; // Your redirect uri
+let client_id = process.env.CLIENT_ID; // Your client id
+let client_secret = process.env.CLIENT_SECRET; // Your secret
+let redirect_uri = 'http://data.cs.purdue.edu:7374/callback'; // Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
