@@ -31,6 +31,12 @@
         $('#m').val('');
         return false;
       });
+
+      // include captured chat message event on page
+      socket.on('chat message', function(msg){
+        console.log("test");
+        $('#messages').append($('<li>').text(msg));
+      });
     });
   </script>
 

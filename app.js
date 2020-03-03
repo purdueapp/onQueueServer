@@ -36,21 +36,24 @@ app.get("/", (req, res) => {
 
 // Listen on the 'connection' event for incoming sockets
 io.on('connection', function(socket){
-  console.log('a user connected');
+  console.log('User connected');
 
+  // Listen to 'chat message' event from client
   socket.on('chat message', function(msg){
     console.log('message: ' + msg);
+
+    // send a message to everyone except for a certain emitting socket
+    socket.broadcast.emit('Message was recieved.');
+    // send the message to everyone, including the sender
+    io.emit('chat message', msg);
   });
 
   // Each socket fires a 'disconnect' event as well
   socket.on('disconnect', function(){
-    console.log('user disconnected');
+    console.log('User disconnected');
   });
 });
 
 http.listen(7374, function(){
   console.log('Listening on 7374');
 });
-
-// console.log('Listening on 7374');
-// app.listen(7374);
