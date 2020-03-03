@@ -11,6 +11,9 @@ var Room = {
 	Server       *socketio.Server    `json:"-"`
 	Size    int                 `json:"size"`
 };
+
+/* Current state dont modify recieve
+
 */
 class Room {
     constructor (id) {
