@@ -15,9 +15,24 @@ var Room = {
 /* Current state dont modify recieve
 
 */
-class Room {
-    constructor (id) {
-        this.id = id;
+// class Room {
+    // constructor (id) {
+        // this.id = id;
 	// Server       *socketio.Server    `json:"-"`
-    }
+    // }
+// }
+
+module.exports = {
+  newRoom: function() {
+    //something
+  }, 
+  addTrack: function() {
+    //something
+  },
+  removeTrack: function() {
+    //something
+  },
+  nextTrack: function() {
+    //something
+  }
 }

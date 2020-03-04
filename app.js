@@ -23,12 +23,12 @@ http.listen(port, function(){
 //   res.sendFile(__dirname + '/index.html');
 // });
 
-// Handle event for creating a room
+// TODO: Handle event for creating a room
 function createRoom(packet) {
 
 }
 
-// Handle event for joining a room
+// TODO: Handle event for joining a room
 function joinRoom(packet) {
 
 }
