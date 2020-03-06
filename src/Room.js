@@ -11,20 +11,25 @@ var Room = {
 	Server       *socketio.Server    `json:"-"`
 	Size    int                 `json:"size"`
 };
-
-/* Current state dont modify recieve
-
 */
-// class Room {
-    // constructor (id) {
-        // this.id = id;
-	// Server       *socketio.Server    `json:"-"`
-    // }
-// }
+var roomCounter = 0;
+
+function getUniqueRoomID() {
+  roomCounter++;
+  return "room-" + roomCounter;
+}
 
 module.exports = {
-  newRoom: function() {
-    //something
+  newRoom: function(hostID) {
+    var room = {
+      "ID": getUniqueRoomID(),
+      "Host": hostID,
+      "Queue": [],
+      "Current": -1,
+      "Size": 1
+    }
+
+    return room;
   }, 
   addTrack: function() {
     //something

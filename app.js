@@ -18,38 +18,36 @@ http.listen(port, function(){
   console.log('Server listening at port %d', port);
 });
 
-// HTML file for testing
-// app.get("/", (req, res) => {
-//   res.sendFile(__dirname + '/index.html');
-// });
-
-// TODO: Handle event for creating a room
-function createRoom(packet) {
-
-}
-
-// TODO: Handle event for joining a room
-function joinRoom(packet) {
-
-}
+const Room = require('./src/Room');
 
 // Fired upon connection with client
 io.on('connection', function(socket) {
   console.log('User connected');
 
-  socket.on('create room', createRoom);
-  socket.on('join room', joinRoom);
+  // Handle creating a room
+  socket.on('create room', function(data) {
+    // Create new room
+    newRoom = Room.newRoom(data.userID);
+    console.log('New room created: ' + newRoom.ID);
 
-  // // Listen to 'chat message' event from client
-  // socket.on('chat message', function(msg){
-  //   console.log('message: ' + msg);
-  //   // send a message to everyone except for a certain emitting socket
-  //   socket.broadcast.emit('Message was recieved.');
-  //   // send the message to everyone, including the sender
-  //   io.emit('chat message', msg);
-  // });
-  // // Each socket fires a 'disconnect' event as well
-  // socket.on('disconnect', function(){
-  //   console.log('User disconnected');
-  // });
+    // Client joins new room and send back room ID
+    socket.join(newRoom.ID);
+    io.emit('create room', newRoom.ID);
+  });
+
+  // Handle joining a room
+  socket.on('join room', function(data) {
+    socket.join(data.roomID);
+    console.log('User joined ' + data.roomID);
+  });
+
+  // Each socket fires a 'disconnect' event as well
+  socket.on('disconnect', function(){
+    console.log('User disconnected');
+  });
 });
+
+// HTML file for testing
+// app.get("/", (req, res) => {
+//   res.sendFile(__dirname + '/index.html');
+// });

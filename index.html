@@ -26,17 +26,22 @@
         e.preventDefault(); // prevents page reloading
 
         // Emit a chat message event with value from form
-        socket.emit('chat message', $('#m').val());
+        socket.emit('create room', $('#m').val());
+        socket.on('create room',function(msg) {
+          console.log(msg);
+          $('#messages').append($('<li>').text(msg));
+        });
 
         $('#m').val('');
         return false;
       });
 
-      // include captured chat message event on page
-      socket.on('chat message', function(msg){
-        console.log("test");
-        $('#messages').append($('<li>').text(msg));
-      });
+      
+
+      // // include captured chat message event on page
+      // socket.on('chat message', function(msg){
+      //   $('#messages').append($('<li>').text(msg));
+      // });
     });
   </script>
 
