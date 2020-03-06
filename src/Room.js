@@ -1,18 +1,5 @@
-// // Room struct will be created here
-/*
-var Room = {
-    ID           string              `json:"id"`
-	Client       *spotify.Client     `json:"-"`
-	Host         spotify.PrivateUser `json:"host"`
-	HostSocketId string              `json:"-"`
-	Queue        []spotify.FullTrack `json:"queue"`
-	CurrentState string              `json:"state"`
-	Mutex        sync.Mutex          `json:"-"`
-	Server       *socketio.Server    `json:"-"`
-	Size    int                 `json:"size"`
-};
-*/
 var roomCounter = 0;
+var roomMap = {};
 
 function getUniqueRoomID() {
   roomCounter++;
@@ -20,24 +7,38 @@ function getUniqueRoomID() {
 }
 
 module.exports = {
-  newRoom: function(hostID) {
+  newRoom: function(socket, data) {
     var room = {
       "ID": getUniqueRoomID(),
-      "Host": hostID,
+      "Host": data.hostID,
       "Queue": [],
       "Current": -1,
       "Size": 1
     }
+    roomMap[room.ID] = room;
 
-    return room;
-  }, 
-  addTrack: function() {
-    //something
+    console.log('New room created: ' + room.ID);
+
+    // Client joins new room and send back room ID
+    socket.join(room.ID);
+    return room.ID;
   },
-  removeTrack: function() {
-    //something
+  joinRoom: function(socket, data) {
+    console.log('User joined ' + data.roomID);
+
+    // Client joins passed in roomID
+    socket.join(data.roomID);
+
+    // Get room data and send back confirmation
+    currRoom = roomMap[data.roomID];
+    if (typeof currRoom !== 'undefined') {
+      currRoom.Size += 1;
+      return true;
+    } else {
+      return false;
+    }
   },
-  nextTrack: function() {
-    //something
+  handleEvent: function(socket, data) {
+    // TODO: handle different room events
   }
 }

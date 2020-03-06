@@ -18,6 +18,7 @@ http.listen(port, function(){
   console.log('Server listening at port %d', port);
 });
 
+// Imports from other files
 const Room = require('./src/Room');
 
 // Fired upon connection with client
@@ -26,22 +27,23 @@ io.on('connection', function(socket) {
 
   // Handle creating a room
   socket.on('create room', function(data) {
-    // Create new room
-    newRoom = Room.newRoom(data.userID);
-    console.log('New room created: ' + newRoom.ID);
-
-    // Client joins new room and send back room ID
-    socket.join(newRoom.ID);
-    io.emit('create room', newRoom.ID);
+    res = Room.newRoom(socket, data);
+    io.emit('create room', res);
   });
 
   // Handle joining a room
   socket.on('join room', function(data) {
-    socket.join(data.roomID);
-    console.log('User joined ' + data.roomID);
+    res = Room.joinRoom(socket, data);
+    io.emit('join room', res);
   });
 
-  // Each socket fires a 'disconnect' event as well
+  // Handle room event
+  socket.on('event', function(data) {
+    res = Room.handleEvent(socket, data);
+    io.emit('event', res);
+  });
+
+  // TODO: Handle disconnect
   socket.on('disconnect', function(){
     console.log('User disconnected');
   });
