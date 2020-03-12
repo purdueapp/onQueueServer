@@ -1,5 +1,10 @@
 module.exports = {
 
+    /*Handler for playing song */
+    handlePlay: function(data, room) {
+        //current
+    },
+
     /*Handler for adding a song to the queue */
     handleAddSong: function(data, room) {
         //TODO add song object when we figure out what data structure we're using
@@ -16,7 +21,7 @@ module.exports = {
 
     /* Handler for skipping a song from the queue */
     handleSongSkip: function(data, room) {
-        //TODO update current song and update song history when we figure out data structure
+        
     },
 
     /* Handler for going back to a song from the queue */
