@@ -8,7 +8,7 @@ function getUniqueRoomID() {
 
 module.exports = {
   newRoom: function(socket, data) {
-    var room = {
+    let room = {
       "ID": getUniqueRoomID(),
       "Host": data.hostID,
       "Users": [], //User objects with role
@@ -37,7 +37,7 @@ module.exports = {
     socket.join(data.roomID);
 
     // Get room data and send back confirmation
-    currRoom = roomMap[data.roomID];
+    let currRoom = roomMap[data.roomID];
     if (typeof currRoom !== 'undefined') {
       currRoom.Size += 1;
       return true;
