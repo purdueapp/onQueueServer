@@ -14,12 +14,11 @@
     </style>
   </head>
 
-  
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script>
     $(function () {
-      // Exposes an io global and then default connects to host serving page. 
+      // Exposes an io global and then default connects to host serving page.
       var socket = io();
 
       $('form').submit(function(e){
@@ -36,7 +35,7 @@
         return false;
       });
 
-      
+
 
       // // include captured chat message event on page
       // socket.on('chat message', function(msg){
