@@ -1,7 +1,7 @@
 // Setup basic express server
 const express = require('express');
 const cors = require('cors');
-let cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
