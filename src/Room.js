@@ -20,7 +20,7 @@ module.exports = {
       "PublicType": 1, //1 for public, 0 for private
       "RoomSongLimit": 100,
       "PersonSongLimit": 50,
-      "SongTime": 10 //Number in seconds
+      "SongTime": 10 //Number in seconds, We might not need to store this
     }
     roomMap[room.ID] = room;
 
