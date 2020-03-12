@@ -9,18 +9,18 @@ function getUniqueRoomID() {
 module.exports = {
   newRoom: function(socket, data) {
     let room = {
-      "ID": getUniqueRoomID(),
-      "Host": data.hostID,
-      "Users": [], //User objects with role
-      "Queue": [],
-      "Current": -1,
-      "Size": 1,
-      "Play": true,
-      "Volume": 0, //range between 0 and 100
-      "PublicType": 1, //1 for public, 0 for private
-      "RoomSongLimit": 100,
-      "PersonSongLimit": 50,
-      "SongTime": 10 //Number in seconds, We might not need to store this
+      id: getUniqueRoomID(),
+      host: data.hostID,
+      users: [], //User objects with role
+      queue: [],
+      current: -1,
+      size: 1,
+      play: true,
+      volume: 0, //range between 0 and 100
+      publicType: 1, //1 for public, 0 for private
+      roomSongLimit: 100,
+      personSongLimit: 50,
+      songTime: 10 //Number in seconds, We might not need to store this
     }
     roomMap[room.ID] = room;
 
