@@ -11,9 +11,16 @@ module.exports = {
     let room = {
       "ID": getUniqueRoomID(),
       "Host": data.hostID,
+      "Users": [], //User objects with role
       "Queue": [],
       "Current": -1,
-      "Size": 1
+      "Size": 1,
+      "Play": true,
+      "Volume": 0,
+      "Type": "public",
+      "RoomSongLimit": 100,
+      "PersonSongLimit": 50,
+      "SongTime": 10 //Number in seconds
     }
     roomMap[room.ID] = room;
 
