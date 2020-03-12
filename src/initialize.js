@@ -1,6 +1,6 @@
 // Initialize Server data structures
-let RoomMap;
+let roomMap;
 
 function init() {
-  RoomMap = {};
+  roomMap = {};
 }
