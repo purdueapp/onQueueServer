@@ -16,8 +16,8 @@ module.exports = {
       "Current": -1,
       "Size": 1,
       "Play": true,
-      "Volume": 0,
-      "Type": "public",
+      "Volume": 0, //range between 0 and 100
+      "PublicType": 1, //1 for public, 0 for private
       "RoomSongLimit": 100,
       "PersonSongLimit": 50,
       "SongTime": 10 //Number in seconds
