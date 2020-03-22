@@ -31,22 +31,22 @@ module.exports = {
 
     /* Handler for updating room privacy (public or private) */
     handleRoomTypeChange: function(data, room) {
-        room.Type = data.Type;
+        room.publicType = data.publicType;
     },
 
     /* Handler for volume change */
     handleVolume: function(data, room) {
-        room.Volume = data.Volume;
+        room.volume = data.volume;
     },
 
     /* Handler for changing the total amount of songs in a room */
     handleRoomSongLimit: function(data, room) {
-        room.RoomSongLimit = data.RoomSongLimit;
+        room.roomSongLimit = data.roomSongLimit;
     },
 
     /* Handler for changing the amount of a songs a user can queue in a room */
     handlePersonSongLimit: function(data, room) {
-        room.PersonSongLimit = data.PersonSongLimit;
+        room.personSongLimit = data.personSongLimit;
     },
 
     /* Handler for manually updating scrubber */
