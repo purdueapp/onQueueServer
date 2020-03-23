@@ -47,5 +47,9 @@ module.exports = {
   },
   handleEvent: function(socket, data) {
     // TODO: handle different room events
+
+    //Switch statement based on last command of JSON, may be empty or pick event
+
+    // TODO: Send back entire room state
   }
 }
