@@ -2,7 +2,16 @@ module.exports = {
 
     /*Handler for playing song */
     handlePlay: function(data, room) {
-        //current
+        if (!room.play) {
+            room.play = true;
+        }
+    },
+
+    /*Handler for pausing a song */
+    handlePause: function(data, room) {
+        if (room.play) {
+            room.play = false;
+        }
     },
 
     /*Handler for adding a song to the queue */
