@@ -135,5 +135,17 @@ module.exports = {
     console.log("AFTER UPDATE:");
     console.log(room.playerState.position);
     console.log("-------------");
+  },
+
+  // For if someone wants to know information about all rooms
+  handleInfo: function() {
+    var rooms = [];
+    for (var key in roomMap) {
+      rooms.push({
+        host: roomMap[key].host,
+        members: roomMap[key].members
+      });
+    }
+    return rooms;
   }
 }

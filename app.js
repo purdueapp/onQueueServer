@@ -73,6 +73,10 @@ io.on('connection', function(socket) {
     io.in(roomID).emit('update', data);
   });
 
+  socket.on('rooms', function() {
+    socket.emit('rooms', Room.handleInfo());
+  })
+
   // TODO: Handle disconnect
   socket.on('disconnect', function(){
     console.log('User disconnected');
