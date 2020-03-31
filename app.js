@@ -24,10 +24,12 @@ http.listen(port, function(){
 
 // Fired upon connection with client
 io.on('connection', function(socket) {
-  console.log('User connected');
+  console.log('User connected.');
 
   // Handle creating a room
   socket.on('create room', function(data) {
+    console.log('Socket event "create room" called.');
+
     res = Room.createRoom(socket, data);
     io.emit('create room', res);
   });

@@ -32,6 +32,10 @@ module.exports = {
         defaultRole: 'DJ'
       },
     }
+
+    console.log('***** Room Object *****');
+    console.log(room);
+    console.log('***********************');
     
     // Add room to room dictionary
     roomMap[room.host] = room;
