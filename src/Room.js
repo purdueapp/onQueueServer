@@ -53,21 +53,21 @@ module.exports = {
     console.log(data);
     console.log("*********************************");
 
-    // If private room. check password
-    if (room.settings.private) {
-      if (room.settings.password != data.password) {
-        return {
-          msg: "Incorrect password."
-        }
-      }
-    }
-
     // Check if room exists
     let currRoom = roomMap[data.roomID];
     if (typeof currRoom == 'undefined') {
       console.log("*** ERROR: ROOM DOES NOT EXIST ***");
       return {
         msg: "Room does not exist."
+      }
+    }
+
+    // If private room. check password
+    if (currRoom.settings.private) {
+      if (currRoom.settings.password != data.password) {
+        return {
+          msg: "Incorrect password."
+        }
       }
     }
 

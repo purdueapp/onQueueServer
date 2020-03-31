@@ -39,7 +39,10 @@ io.on('connection', function(socket) {
     console.log('Socket event "join room" called.');
 
     res = Room.joinRoom(socket, data);
-    io.emit('join room', res);
+    io.emit('update', {
+      type: 'room',
+      room: res
+    });
   });
 
   // // Handle room event
