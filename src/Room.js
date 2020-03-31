@@ -90,19 +90,7 @@ module.exports = {
       - Remove
       ------------------------------------------ */
   handleEvent: function(socket, data) {
-    //console.log(socket.rooms);
-    let roomID = '';
-    Object.values(socket.rooms).forEach(value => {
-      if (value[0] !== socket.id) {
-        roomID = value;
-      }
-    });
-    console.log(roomID);
-    let room = roomMap[roomID];
-    //console.log("BEFORE UPDATE: ");
-    console.log(room);
-    //console.log("---------------------");
-    console.log("for switch " + data);
+    console.log("for switch " + data.type);
     switch (data.type) {
       case 'next':
         break;

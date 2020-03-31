@@ -56,7 +56,7 @@ io.on('connection', function(socket) {
       }
     });
     console.log(roomID);
-    io.in(roomID).emit('command', data.event);
+    io.in(roomID).emit('command', data);
   });
 
   // TODO: Handle disconnect
