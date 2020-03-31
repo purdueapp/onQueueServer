@@ -21,7 +21,7 @@ module.exports = {
         volume: 0.5,
         paused: false
       },
-      members: [User.newUser(data.host, 'Host', data.host)],
+      members: [User.newUser(data.host.display_name, 'Host', data.host.id)],
       accessToken: data.accessToken,
       host: data.host,
       settings: {
@@ -31,6 +31,7 @@ module.exports = {
         djLimit: 5,
         defaultRole: 'DJ'
       },
+      id: data.host.id
     }
 
     console.log('***** Room Object *****');
@@ -38,16 +39,20 @@ module.exports = {
     console.log('***********************');
     
     // Add room to room dictionary
-    roomMap[room.host] = room;
+    roomMap[room.id] = room;
 
     // Client joins new room and send back room ID
-    socket.join(room.host);
-    return room.host;
+    socket.join(room.id);
+    return [room.id, { event: 'pause' }];
   },
   /*  ------------------------------------------
       Join Room Command
       ------------------------------------------ */
   joinRoom: function(socket, data) {
+    console.log("***** Passed in Data Object *****");
+    console.log(data);
+    console.log("*********************************");
+
     // If private room. check password
     if (room.settings.private) {
       if (room.settings.password != data.password) {
@@ -60,6 +65,7 @@ module.exports = {
     // Check if room exists
     let currRoom = roomMap[data.roomID];
     if (typeof currRoom == 'undefined') {
+      console.log("*** ERROR: ROOM DOES NOT EXIST ***");
       return {
         msg: "Room does not exist."
       }

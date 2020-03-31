@@ -30,21 +30,23 @@ io.on('connection', function(socket) {
   socket.on('create room', function(data) {
     console.log('Socket event "create room" called.');
 
-    res = Room.createRoom(socket, data);
-    io.emit('create room', res);
+    const res = Room.createRoom(socket, data);
+    socket.emit('event', res[1]);
   });
 
   // Handle joining a room
   socket.on('join room', function(data) {
+    console.log('Socket event "join room" called.');
+
     res = Room.joinRoom(socket, data);
     io.emit('join room', res);
   });
 
-  // Handle room event
-  socket.on('event', function(data) {
-    res = Room.handleEvent(socket, data);
-    io.emit('event', res);
-  });
+  // // Handle room event
+  // socket.on('event', function(data) {
+  //   res = Room.handleEvent(socket, data);
+  //   io.emit('event', res);
+  // });
 
   // TODO: Handle disconnect
   socket.on('disconnect', function(){
