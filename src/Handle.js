@@ -33,8 +33,7 @@ module.exports = {
             }
         });
         
-        let tracks = [];
-        return tracks;
+        return data.tracks.items;
     },
 
     /*Handler for playing song */
