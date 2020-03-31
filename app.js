@@ -10,7 +10,7 @@ require('dotenv').config();
 
 // Imports from other files
 const Room = require('./src/Room');
-
+const Handle = require('./Handle');
 
 // Routing
 app.use(express.static(__dirname + '/public'))
@@ -75,7 +75,11 @@ io.on('connection', function(socket) {
 
   socket.on('rooms', function() {
     socket.emit('rooms', Room.handleInfo());
-  })
+  });
+
+  socket.on('search', function(data) {
+    socket.emit('search', Room.handleSearch(data.query));
+  });
 
   // TODO: Handle disconnect
   socket.on('disconnect', function(){

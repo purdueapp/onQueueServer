@@ -12,6 +12,14 @@ module.exports = {
         room.accessToken = state;
     },
 
+    /*Handler for searching Spotify API for songs */
+    handleSongSearch: function(room, query) {
+        let token = room.accessToken;
+        
+        let tracks = [];
+        return tracks;
+    },
+
     /*Handler for playing song */
     handlePlay: function(room) {
         if (!room.playerState.paused) {
