@@ -1,50 +1,81 @@
-var roomCounter = 0;
 var roomMap = {};
 
-function getUniqueRoomID() {
-  roomCounter++;
-  return "room-" + roomCounter;
-}
-
 module.exports = {
-  newRoom: function(socket, data) {
+  /*  ------------------------------------------
+      Create Room Command
+      ------------------------------------------ */
+  createRoom: function(socket, data) {
+    // Create new room object
     let room = {
-      id: getUniqueRoomID(),
-      host: data.hostID,
-      users: [], //User objects with role
-      queue: [],
-      current: -1,
-      size: 1,
-      play: true,
-      volume: 0, //range between 0 and 100
-      publicType: 1, //1 for public, 0 for private
-      roomSongLimit: 100,
-      personSongLimit: 50,
-      songTime: 10 //Number in seconds, We might not need to store this
+      playerState: {
+        trackWindow: {
+          currentTrack:'',
+          nextTracks: [],
+          previousTracks: []
+        },
+        duration: 0,
+        position: 0,
+        volume: 0.5,
+        paused: false
+      },
+      // TODO: Add host as a member
+      members: [],
+      accessToken: data.accessToken,
+      host: data.host,
+      settings: {
+        private: data.private,
+        password: data.password,
+        queueLimit: 50,
+        djLimit: 5,
+        defaultRole: 'DJ'
+      },
     }
-    roomMap[room.ID] = room;
-
-    console.log('New room created: ' + room.ID);
+    
+    // Add room to room dictionary
+    roomMap[room.host] = room;
 
     // Client joins new room and send back room ID
-    socket.join(room.ID);
-    return room.ID;
+    socket.join(room.host);
+    return room.host;
   },
+  /*  ------------------------------------------
+      Join Room Command
+      ------------------------------------------ */
   joinRoom: function(socket, data) {
-    console.log('User joined ' + data.roomID);
-
-    // Client joins passed in roomID
-    socket.join(data.roomID);
-
-    // Get room data and send back confirmation
-    let currRoom = roomMap[data.roomID];
-    if (typeof currRoom !== 'undefined') {
-      currRoom.Size += 1;
-      return true;
-    } else {
-      return false;
+    // If private room. check password
+    if (room.settings.private) {
+      if (room.settings.password != data.password) {
+        return {
+          msg: "Incorrect password."
+        }
+      }
     }
+
+    // Check if room exists
+    let currRoom = roomMap[data.roomID];
+    if (typeof currRoom == 'undefined') {
+      return {
+        msg: "Room does not exist."
+      }
+    }
+
+    // Client joins passed in roomID and return room state
+    socket.join(data.roomID);
+    // TODO: Add user to room
+    roomMap[data.roomID] = currRoom;
+    return currRoom;
   },
+  /*  ------------------------------------------
+      Handle Event Command
+      - Next
+      - Previous
+      - Pause
+      - Play
+      - Seek
+      - Reorder
+      - Queue
+      - Remove
+      ------------------------------------------ */
   handleEvent: function(socket, data) {
     // TODO: handle different room events
 

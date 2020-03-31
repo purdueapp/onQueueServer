@@ -27,7 +27,7 @@ io.on('connection', function(socket) {
 
   // Handle creating a room
   socket.on('create room', function(data) {
-    res = Room.newRoom(socket, data);
+    res = Room.createRoom(socket, data);
     io.emit('create room', res);
   });
 
