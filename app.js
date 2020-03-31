@@ -39,25 +39,39 @@ io.on('connection', function(socket) {
     console.log('Socket event "join room" called.');
 
     res = Room.joinRoom(socket, data);
-    io.emit('update', {
+    socket.emit('update', {
       type: 'room',
       room: res
     });
   });
 
-  // Handle update event
-  socket.on('update', function(data) {
-    console.log('Socket event "update" called.');
-
-    res = Room.handleUpdate(socket, data);
-    // TODO: emit something
+  // Handle room event
+  socket.on('command', function(data) {
+    console.log('Socket event "command" called.');
+    //let room = Room.handleEvent(socket, data);
+    let roomID = '';
+    Object.values(socket.rooms).forEach(value => {
+      if (value[0] !== socket.id) {
+        roomID = value;
+      }
+    });
+    console.log(roomID);
+    io.in(roomID).emit('command', data);
   });
 
-  // // Handle room event
-  // socket.on('event', function(data) {
-  //   res = Room.handleEvent(socket, data);
-  //   io.emit('event', res);
-  // });
+  //Handle update event
+  socket.on('update', function(data) {
+    console.log('Socket event "update" called.');
+    let roomID = '';
+    Room.handleEvent(socket, data);
+    Object.values(socket.rooms).forEach(value => {
+      if (value[0] !== socket.id) {
+        roomID = value;
+      }
+    });
+    console.log(roomID);
+    io.in(roomID).emit('update', data);
+  });
 
   // TODO: Handle disconnect
   socket.on('disconnect', function(){

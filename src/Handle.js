@@ -1,16 +1,23 @@
 module.exports = {
+    /*Handler for updating player state */
+    handlePlayerState: function(room, state) {
+        room.playerState = {
+            ...room.playerState,
+            ...state
+        };
+    },
 
     /*Handler for playing song */
-    handlePlay: function(data, room) {
-        if (!room.play) {
-            room.play = true;
+    handlePlay: function(room) {
+        if (!room.playerState.paused) {
+            room.playerState.paused = true;
         }
     },
 
     /*Handler for pausing a song */
-    handlePause: function(data, room) {
-        if (room.play) {
-            room.play = false;
+    handlePause: function(room) {
+        if (room.playerState.paused) {
+            room.playerState.paused = false;
         }
     },
 
@@ -39,8 +46,8 @@ module.exports = {
     },
 
     /* Handler for updating room privacy (public or private) */
-    handleRoomTypeChange: function(data, room) {
-        room.publicType = data.publicType;
+    handleRoomTypeChange: function(room) {
+        //room.settings.private = data.publicType;
     },
 
     /* Handler for volume change */
