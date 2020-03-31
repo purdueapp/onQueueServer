@@ -45,6 +45,14 @@ io.on('connection', function(socket) {
     });
   });
 
+  // Handle update event
+  socket.on('update', function(data) {
+    console.log('Socket event "update" called.');
+
+    res = Room.handleUpdate(socket, data);
+    // TODO: emit something
+  });
+
   // // Handle room event
   // socket.on('event', function(data) {
   //   res = Room.handleEvent(socket, data);

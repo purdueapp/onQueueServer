@@ -1,5 +1,6 @@
 // Imports from other files
 const User = require('./User');
+const Update = require('./Update');
 
 var roomMap = {};
 
@@ -77,6 +78,34 @@ module.exports = {
     currRoom.members.push(user);
     roomMap[data.roomID] = currRoom;
     return currRoom;
+  },
+  /*  ------------------------------------------
+      Handle Update Command
+      - Room
+      - Player state
+      - Track window
+      - Members
+      - Settings
+      ------------------------------------------ */
+  handleUpdate: function(socket, data) {
+    switch(data.type) {
+      case 'room':
+        Update.updateRoom();
+        break;
+      case 'playerState':
+        break;
+      case 'trackWindow':
+        break;
+      case 'members':
+        break;
+      case 'settings':
+        break;
+      default:
+        console.log("*** ERROR: UPDATE COMMAND '" + data.type + "' DOES NOT EXIST ***");
+        return {
+          msg: "Unknown update command."
+        };
+    }
   },
   /*  ------------------------------------------
       Handle Event Command
