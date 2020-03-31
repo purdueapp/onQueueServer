@@ -39,17 +39,25 @@ io.on('connection', function(socket) {
     console.log('Socket event "join room" called.');
 
     res = Room.joinRoom(socket, data);
-    io.emit('update', {
+    socket.emit('update', {
       type: 'room',
       room: res
     });
   });
 
-  // // Handle room event
-  // socket.on('event', function(data) {
-  //   res = Room.handleEvent(socket, data);
-  //   io.emit('event', res);
-  // });
+  // Handle room event
+  socket.on('command', function(data) {
+    console.log('Socket event "command" called.');
+    //let room = Room.handleEvent(socket, data);
+    let roomID = '';
+    Object.values(socket.rooms).forEach(value => {
+      if (value[0] !== socket.id) {
+        roomID = value;
+      }
+    });
+    console.log(roomID);
+    io.in(roomID).emit('command', data.event);
+  });
 
   // TODO: Handle disconnect
   socket.on('disconnect', function(){

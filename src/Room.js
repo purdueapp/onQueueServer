@@ -90,14 +90,31 @@ module.exports = {
       - Remove
       ------------------------------------------ */
   handleEvent: function(socket, data) {
-    switch (data.event) {
+    //console.log(socket.rooms);
+    let roomID = '';
+    Object.values(socket.rooms).forEach(value => {
+      if (value[0] !== socket.id) {
+        roomID = value;
+      }
+    });
+    console.log(roomID);
+    let room = roomMap[roomID];
+    //console.log("BEFORE UPDATE: ");
+    console.log(room);
+    //console.log("---------------------");
+    console.log("for switch " + data);
+    switch (data.type) {
       case 'next':
         break;
       case 'previous':
         break;
       case 'pause':
+        console.log("pause hit");
+        //Handle.handlePause(room);
         break;
       case 'play':
+        console.log("play hit");
+        //Handle.handlePlay(room);
         break;
       case 'seek':
         break;
@@ -112,7 +129,9 @@ module.exports = {
           msg: "Unknown event command."
         }
     }
-
+    //console.log("\nAFTER UPDATE: ");
+    //console.log(room);
+    return room;
     // TODO: Send back entire room state
   }
 }
