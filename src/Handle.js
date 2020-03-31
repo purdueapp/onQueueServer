@@ -14,7 +14,24 @@ module.exports = {
 
     /*Handler for searching Spotify API for songs */
     handleSongSearch: function(room, query) {
-        let token = room.accessToken;
+        let accessToken = room.accessToken;
+        $.ajax({
+            url: 'https://api.spotify.com/v1/search',
+            type: 'GET',
+            data: {
+                q: query,
+                type: 'track',
+                market: 'US',
+                limit: 5
+            },
+            headers: {
+                'Authorization' : 'Bearer ' + accessToken
+            },
+            success: function(data) {
+                console.log("SUCCESS");
+                console.log(data);
+            }
+        });
         
         let tracks = [];
         return tracks;
