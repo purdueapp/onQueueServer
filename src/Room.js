@@ -130,10 +130,14 @@ module.exports = {
     console.log("for switch " + data.type);
     console.log("-------------");
     console.log("Before Update:");
-    console.log(room.playerState.position);
+    //console.log(room.playerState.position);
+    console.log(room.accessToken);
     switch (data.type) {
       case 'playerState':
         Handle.handlePlayerState(room, data.playerState);
+        break;
+      case 'accessToken':
+        Handle.handleAccessToken(room, data.accessToken);
         break;
       case 'next':
         break;
@@ -162,7 +166,8 @@ module.exports = {
     }
     console.log("-------------");
     console.log("AFTER UPDATE:");
-    console.log(room.playerState.position);
+    //console.log(room.playerState.position);
+    console.log(room.accessToken);
     console.log("-------------");
   },
 
