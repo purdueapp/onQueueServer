@@ -10,7 +10,6 @@ require('dotenv').config();
 
 // Imports from other files
 const Room = require('./src/Room');
-const Handle = require('./Handle');
 
 // Routing
 app.use(express.static(__dirname + '/public'))
