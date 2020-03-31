@@ -7,6 +7,11 @@ module.exports = {
         };
     },
 
+    /*Handler for updating access token */
+    handleAccessToken: function(room, state) {
+        room.accessToken = state;
+    },
+
     /*Handler for playing song */
     handlePlay: function(room) {
         if (!room.playerState.paused) {
