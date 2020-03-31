@@ -1,13 +1,26 @@
+var userCount = 0;
+
+function uniqueUserID() {
+  userCount++;
+  return "user" + userCount;
+}
+
 module.exports = {
-  newUser: function(socket, data) {
-    var user = {
-      id: 0, //import later from Spotify, get Spotify ID if signed in, otherwise generate uniqueID
-      role: 0, //0 for Admin, 1 for DJ, 2 for Listener, 3 for Host
+  newUser: function(newName, newRole, newID) {
+    if (newName == '') {
+      newName = uniqueUserID();
+    }
+    if (newID == '') {
+      newID = uniqueUserID();
     }
 
-    console.log('New user created: ' + user.ID);
-  },
-  handleEvent: function(socket, data) {
-    // TODO: handle different user events
+    var user = {
+      displayName: newName,
+      role: newRole,
+      id: newID,
+      songsQueued: 0
+    }
+
+    return user;
   }
 }

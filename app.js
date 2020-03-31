@@ -8,6 +8,10 @@ const io = require('socket.io')(http);
 const port = process.env.PORT || 7374;
 require('dotenv').config();
 
+// Imports from other files
+const Room = require('./src/Room');
+
+
 // Routing
 app.use(express.static(__dirname + '/public'))
    .use(cors())
@@ -17,9 +21,6 @@ app.use(express.static(__dirname + '/public'))
 http.listen(port, function(){
   console.log('Server listening at port %d', port);
 });
-
-// Imports from other files
-const Room = require('./src/Room');
 
 // Fired upon connection with client
 io.on('connection', function(socket) {

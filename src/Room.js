@@ -1,3 +1,6 @@
+// Imports from other files
+const User = require('./src/User');
+
 var roomMap = {};
 
 module.exports = {
@@ -18,8 +21,7 @@ module.exports = {
         volume: 0.5,
         paused: false
       },
-      // TODO: Add host as a member
-      members: [],
+      members: [User.newUser(data.host, 'Host', data.host)],
       accessToken: data.accessToken,
       host: data.host,
       settings: {
@@ -61,7 +63,8 @@ module.exports = {
 
     // Client joins passed in roomID and return room state
     socket.join(data.roomID);
-    // TODO: Add user to room
+    let user = User.newUser('', currRoom.settings.defaultRole, '')
+    currRoom.members.push(user);
     roomMap[data.roomID] = currRoom;
     return currRoom;
   },
@@ -77,9 +80,28 @@ module.exports = {
       - Remove
       ------------------------------------------ */
   handleEvent: function(socket, data) {
-    // TODO: handle different room events
-
-    //Switch statement based on last command of JSON, may be empty or pick event
+    switch (data.event) {
+      case 'next':
+        break;
+      case 'previous':
+        break;
+      case 'pause':
+        break;
+      case 'play':
+        break;
+      case 'seek':
+        break;
+      case 'reorder':
+        break;
+      case 'queue':
+        break;
+      case 'remove':
+        break;
+      default:
+        return {
+          msg: "Unknown event command."
+        }
+    }
 
     // TODO: Send back entire room state
   }
