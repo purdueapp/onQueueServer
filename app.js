@@ -59,6 +59,20 @@ io.on('connection', function(socket) {
     io.in(roomID).emit('command', data);
   });
 
+  //Handle update event
+  socket.on('update', function(data) {
+    console.log('Socket event "update" called.');
+    let roomID = '';
+    Room.handleEvent(socket, data);
+    Object.values(socket.rooms).forEach(value => {
+      if (value[0] !== socket.id) {
+        roomID = value;
+      }
+    });
+    console.log(roomID);
+    io.in(roomID).emit('update', data);
+  });
+
   // TODO: Handle disconnect
   socket.on('disconnect', function(){
     console.log('User disconnected');

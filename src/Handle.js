@@ -1,4 +1,11 @@
 module.exports = {
+    /*Handler for updating player state */
+    handlePlayerState: function(room, state) {
+        room.playerState = {
+            ...room.playerState,
+            ...state
+        };
+    },
 
     /*Handler for playing song */
     handlePlay: function(room) {

@@ -1,5 +1,6 @@
 // Imports from other files
 const User = require('./User');
+const Handle = require('./Handle');
 
 var roomMap = {};
 
@@ -90,8 +91,21 @@ module.exports = {
       - Remove
       ------------------------------------------ */
   handleEvent: function(socket, data) {
+    let roomID = '';
+    Object.values(socket.rooms).forEach(value => {
+      if (value[0] !== socket.id) {
+        roomID = value;
+      }
+    });
+    let room = roomMap[roomID];
     console.log("for switch " + data.type);
+    console.log("-------------");
+    console.log("Before Update:");
+    console.log(room.playerState.position);
     switch (data.type) {
+      case 'playerState':
+        Handle.handlePlayerState(room, data.playerState);
+        break;
       case 'next':
         break;
       case 'previous':
@@ -117,9 +131,9 @@ module.exports = {
           msg: "Unknown event command."
         }
     }
-    //console.log("\nAFTER UPDATE: ");
-    //console.log(room);
-    return room;
-    // TODO: Send back entire room state
+    console.log("-------------");
+    console.log("AFTER UPDATE:");
+    console.log(room.playerState.position);
+    console.log("-------------");
   }
 }
