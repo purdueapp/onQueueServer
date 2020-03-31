@@ -98,11 +98,11 @@ module.exports = {
       }
     });
     let room = roomMap[roomID];
-    console.log("for switch " + data.type);
-    console.log("-------------");
-    console.log("Before Update:");
+    //console.log("for switch " + data.type);
+    //console.log("-------------");
+    //console.log("Before Update:");
     //console.log(room.playerState.position);
-    console.log(room.accessToken);
+    //console.log(room.accessToken);
     switch (data.type) {
       case 'playerState':
         Handle.handlePlayerState(room, data.playerState);
@@ -135,11 +135,11 @@ module.exports = {
           msg: "Unknown event command."
         }
     }
-    console.log("-------------");
-    console.log("AFTER UPDATE:");
+    //console.log("-------------");
+    //console.log("AFTER UPDATE:");
     //console.log(room.playerState.position);
-    console.log(room.accessToken);
-    console.log("-------------");
+    //console.log(room.accessToken);
+    //console.log("-------------");
   },
 
   // For if someone wants to know information about all rooms
@@ -152,5 +152,16 @@ module.exports = {
       });
     }
     return rooms;
+  },
+
+  handleSearch: function(query) {
+    let roomID = '';
+    Object.values(socket.rooms).forEach(value => {
+      if (value[0] !== socket.id) {
+        roomID = value;
+      }
+    });
+    let room = roomMap[roomID];
+    return Handle.handleSongSearch(room, query);
   }
 }
