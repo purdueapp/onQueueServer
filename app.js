@@ -14,7 +14,7 @@ const Room = require('./src/Room');
 
 // Routing
 app.use(express.static(__dirname + '/public'))
-   .use(cors())
+   .use(cors({credentials: true, origin: true}))
    .use(cookieParser());
 
 // HTTP server listen
