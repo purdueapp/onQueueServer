@@ -14,15 +14,19 @@ const Room = require('./src/Room');
 
 // Routing
 app.use(express.static(__dirname + '/public'))
-   .use(function(req, res, next) {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "X-Requested-With");
-        res.header("Access-Control-Allow-Headers", "Content-Type");
-        res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
-        next();
-    })
-   .use(cors({credentials: true, origin: true}))
-   .use(cookieParser());
+  .use(cors({credentials: true, origin: true}))
+  .use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+    next();
+  })
+  .use(cookieParser());
+
+app.get('/', function (req, res) {
+    res.send('<b>onQueue Server</b>');
+});
 
 // HTTP server listen
 http.listen(port, function(){
