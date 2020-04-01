@@ -11,17 +11,7 @@ module.exports = {
   createRoom: function(socket, data) {
     // Create new room object
     let room = {
-      playerState: {
-        trackWindow: {
-          currentTrack:'',
-          nextTracks: [],
-          previousTracks: []
-        },
-        duration: 0,
-        position: 0,
-        volume: 0.5,
-        paused: false
-      },
+      playerState: data.playerState,
       members: [User.newUser(data.host.display_name, 'Host', data.host.id)],
       accessToken: data.accessToken,
       host: data.host,
