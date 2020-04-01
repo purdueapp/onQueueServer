@@ -17,11 +17,17 @@ var corsOptions = {
     callback(null, true)
   }
 }
-
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 // Routing
+/*
 app.use(express.static(__dirname + '/public'))
   .use(cors(corsOptions))
   .use(cookieParser());
+*/
 
 app.get('/', function (req, res) {
     res.send('<b>onQueue Server</b>');
