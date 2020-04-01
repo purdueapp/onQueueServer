@@ -14,7 +14,6 @@ const Room = require('./src/Room');
 
 // Routing
 app.use(express.static(__dirname + '/public'))
-   .use(cors({credentials: true, origin: true}))
    .use(function(req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -22,6 +21,7 @@ app.use(express.static(__dirname + '/public'))
         res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
         next();
     })
+   .use(cors({credentials: true, origin: true}))
    .use(cookieParser());
 
 // HTTP server listen
