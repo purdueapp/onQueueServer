@@ -1,6 +1,5 @@
 // Imports from other files
 const User = require('./User');
-const Update = require('./Update');
 const Handle = require('./Handle');
 
 var roomMap = {};
@@ -81,34 +80,6 @@ module.exports = {
     return currRoom;
   },
   /*  ------------------------------------------
-      Handle Update Command
-      - Room
-      - Player state
-      - Track window
-      - Members
-      - Settings
-      ------------------------------------------ */
-  handleUpdate: function(socket, data) {
-    switch(data.type) {
-      case 'room':
-        Update.updateRoom();
-        break;
-      case 'playerState':
-        break;
-      case 'trackWindow':
-        break;
-      case 'members':
-        break;
-      case 'settings':
-        break;
-      default:
-        console.log("*** ERROR: UPDATE COMMAND '" + data.type + "' DOES NOT EXIST ***");
-        return {
-          msg: "Unknown update command."
-        };
-    }
-  },
-  /*  ------------------------------------------
       Handle Event Command
       - Next
       - Previous
@@ -127,11 +98,13 @@ module.exports = {
       }
     });
     let room = roomMap[roomID];
-    //console.log("for switch " + data.type);
-    //console.log("-------------");
-    //console.log("Before Update:");
-    //console.log(room.playerState.position);
-    //console.log(room.accessToken);
+    if (typeof room == 'undefined') {
+      console.log("*** ERROR: ROOM DOES NOT EXIST ***");
+      return {
+        msg: "Room does not exist."
+      }
+    }
+
     switch (data.type) {
       case 'playerState':
         Handle.handlePlayerState(room, data.playerState);
@@ -164,11 +137,6 @@ module.exports = {
           msg: "Unknown event command."
         }
     }
-    //console.log("-------------");
-    //console.log("AFTER UPDATE:");
-    //console.log(room.playerState.position);
-    //console.log(room.accessToken);
-    //console.log("-------------");
   },
 
   // For if someone wants to know information about all rooms
@@ -183,14 +151,16 @@ module.exports = {
     return rooms;
   },
 
-  handleSearch: function(query) {
+  handleSearch: async function(socket, query) {
     let roomID = '';
     Object.values(socket.rooms).forEach(value => {
       if (value[0] !== socket.id) {
         roomID = value;
       }
     });
+
     let room = roomMap[roomID];
-    return Handle.handleSongSearch(room, query);
+    let res = await Handle.handleSongSearch(room, query);
+    return res;
   }
 }

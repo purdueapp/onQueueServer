@@ -1,4 +1,5 @@
 // Setup basic express server
+const fetch = require('node-fetch');
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -44,10 +45,8 @@ io.on('connection', function(socket) {
     });
   });
 
-  // Handle room event
+  // Handle room commands
   socket.on('command', function(data) {
-    console.log('Socket event "command" called.');
-    //let room = Room.handleEvent(socket, data);
     let roomID = '';
     Object.values(socket.rooms).forEach(value => {
       if (value[0] !== socket.id) {
@@ -58,9 +57,8 @@ io.on('connection', function(socket) {
     io.in(roomID).emit('command', data);
   });
 
-  //Handle update event
+  //Handle state updates
   socket.on('update', function(data) {
-    console.log('Socket event "update" called.');
     let roomID = '';
     Room.handleEvent(socket, data);
     Object.values(socket.rooms).forEach(value => {
@@ -68,7 +66,6 @@ io.on('connection', function(socket) {
         roomID = value;
       }
     });
-    console.log(roomID);
     io.in(roomID).emit('update', data);
   });
 
@@ -77,7 +74,10 @@ io.on('connection', function(socket) {
   });
 
   socket.on('search', function(data) {
-    socket.emit('search', Room.handleSearch(data.query));
+    console.log('Socket event "search" called.');
+    Room.handleSearch(socket, data.query).then(data => {
+      socket.emit('search', data);
+    });
   });
 
   // TODO: Handle disconnect

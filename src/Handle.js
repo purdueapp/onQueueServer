@@ -1,3 +1,7 @@
+const fetch = require('node-fetch');
+const url = require('url');
+const qs = require('qs');
+
 module.exports = {
     /*Handler for updating player state */
     handlePlayerState: function(room, state) {
@@ -13,27 +17,30 @@ module.exports = {
     },
 
     /*Handler for searching Spotify API for songs */
-    handleSongSearch: function(room, query) {
+    handleSongSearch: async function(room, query) {
         let accessToken = room.accessToken;
-        $.ajax({
-            url: 'https://api.spotify.com/v1/search',
-            type: 'GET',
-            data: {
-                q: query,
-                type: 'track',
-                market: 'US',
-                limit: 5
-            },
-            headers: {
-                'Authorization' : 'Bearer ' + accessToken
-            },
-            success: function(data) {
-                console.log("SUCCESS");
-                console.log(data);
-            }
+        let params = qs.stringify({
+          q: query,
+          type: 'track',
+          market: 'US',
+          limit: 10
         });
-        
-        return data.tracks.items;
+
+        console.log(params);
+
+        const res = await fetch('https://api.spotify.com/v1/search?' + params, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + accessToken
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            return data.tracks.items;
+        });
+        return res;
     },
 
     /*Handler for playing song */
