@@ -43,6 +43,18 @@ module.exports = {
         return res;
     },
 
+    /*Handler for settings update */
+    handleSetting: function(room, setting) {
+        //console.log("before")
+        //console.log(room.settings.queueLimit);
+        room.settings = {
+            ...room.settings,
+            ...setting
+        }
+        //console.log("after");
+        //console.log(room.settings.queueLimit);
+    },
+
     /*Handler for playing song */
     handlePlay: function(room) {
         if (!room.playerState.paused) {

@@ -102,6 +102,12 @@ module.exports = {
       case 'accessToken':
         Handle.handleAccessToken(room, data.accessToken);
         break;
+      case 'settings':
+        //Check if user is authorized
+        console.log("Settings hit");
+        console.log(data.settings);
+        Handle.handleSetting(room, data.settings);
+        break;
       case 'next':
         break;
       case 'previous':

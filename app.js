@@ -82,6 +82,7 @@ io.on('connection', function(socket) {
         roomID = value;
       }
     });
+
     io.in(roomID).emit('update', data);
   });
 
