@@ -16,7 +16,7 @@ module.exports = {
       accessToken: data.accessToken,
       host: data.host,
       settings: {
-        private: data.private,
+        isPrivate: data.private,
         password: data.password,
         queueLimit: 50,
         djLimit: 5,
