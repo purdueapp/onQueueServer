@@ -172,7 +172,7 @@ module.exports = {
       rooms.push({
         host: roomMap[key].host,
         members: roomMap[key].members,
-        isPrivate: false
+        isPrivate: roomMap[key].settings.isPrivate
       });
     }
     return rooms;
