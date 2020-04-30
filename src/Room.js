@@ -64,8 +64,32 @@ module.exports = {
 
     // Client joins passed in roomID and return room state
     socket.join(data.roomID);
-    let user = User.newUser('', currRoom.settings.defaultRole, '')
+    let user = User.newUser('', currRoom.settings.defaultRole, '', socket.id);
     currRoom.members.push(user);
+    roomMap[data.roomID] = currRoom;
+    return currRoom;
+  },
+  /*  ------------------------------------------
+      Leave Room Command
+      ------------------------------------------ */
+  leaveRoom: function(socket, roomID) {
+    // Check if room exists
+    let currRoom = roomMap[data.roomID];
+    if (typeof currRoom == 'undefined') {
+      console.log("*** ERROR: ROOM DOES NOT EXIST ***");
+      return {
+        msg: "Room does not exist."
+      }
+    }
+
+    // Client leaves passed in roomID and makes appropriate changes
+    for (var i = 0; i < currRoom.members.length; i++) {
+        if (currRoom.members[i].sID == socket.id) {
+            array.splice(i, 1);
+        }
+    }
+    
+    // Update room struct
     roomMap[data.roomID] = currRoom;
     return currRoom;
   },

@@ -6,7 +6,7 @@ function uniqueUserID() {
 }
 
 module.exports = {
-  newUser: function(newName, newRole, newID) {
+  newUser: function(newName, newRole, newID, socketID) {
     if (newName == '') {
       newName = uniqueUserID();
     }
@@ -15,6 +15,7 @@ module.exports = {
     }
 
     var user = {
+      sID: socketID,
       displayName: newName,
       role: newRole,
       id: newID,
