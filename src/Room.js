@@ -166,7 +166,8 @@ module.exports = {
     for (var key in roomMap) {
       rooms.push({
         host: roomMap[key].host,
-        members: roomMap[key].members
+        members: roomMap[key].members,
+        isPrivate: false
       });
     }
     return rooms;
