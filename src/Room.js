@@ -131,6 +131,11 @@ module.exports = {
         //Check if user is authorized
         console.log("Settings hit");
         console.log(data.settings);
+        if (data.settings.maxQueueLength) {
+          if (data.settings.maxQueueLength >= room.settings.queueLimit) {
+            break;
+          }
+        }
         Handle.handleSetting(room, data.settings);
         break;
       case 'next':
