@@ -72,14 +72,16 @@ module.exports = {
   /*  ------------------------------------------
       Leave Room Command
       ------------------------------------------ */
-  leaveRoom: function(socket, roomID) {
-    // Check if room exists
-    let currRoom = roomMap[data.roomID];
-    if (typeof currRoom == 'undefined') {
-      console.log("*** ERROR: ROOM DOES NOT EXIST ***");
-      return {
-        msg: "Room does not exist."
+  leaveRoom: function(socket) {
+    let roomID = '';
+    Object.values(socket.rooms).forEach(value => {
+      if (value[0] !== socket.id) {
+        roomID = value;
       }
+    });
+    let currRoom = roomMap[roomID];
+    if (typeof currRoom == 'undefined') {
+      return;
     }
 
     // Client leaves passed in roomID and makes appropriate changes
@@ -90,8 +92,7 @@ module.exports = {
     }
     
     // Update room struct
-    roomMap[data.roomID] = currRoom;
-    return currRoom;
+    roomMap[roomID] = currRoom;
   },
   /*  ------------------------------------------
       Handle Event Command

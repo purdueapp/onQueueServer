@@ -99,15 +99,7 @@ io.on('connection', function(socket) {
 
   // TODO: Handle disconnect
   socket.on('disconnect', function(){
-    let roomID = '';
-    Room.handleEvent(socket, data);
-    Object.values(socket.rooms).forEach(value => {
-      if (value[0] !== socket.id) {
-        roomID = value;
-      }
-    });
-
-    Room.leaveRoom(socket, roomID);
+    Room.leaveRoom(socket);
     console.log('User disconnected');
   });
 });
